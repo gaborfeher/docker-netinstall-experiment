@@ -1,0 +1,17 @@
+version: '2'
+services:
+  dnsmasq:
+    build: ./dnsmasq
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+    privileged: true
+    volumes:
+      - ./tftp:/tftp
+    command:
+      "--dhcp-boot=bootx64.efi"
+  tcpdump:
+    image: crccheck/tcpdump:4.7.4
+    network_mode: host
+    command:
+      "-i eth0 port 69"
